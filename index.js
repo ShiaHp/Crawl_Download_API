@@ -38,7 +38,7 @@ app.get("/api/v1", async (req, res) => {
         characters.push({
           name,
           image,
-          url: "http://localhost:8080/api/v1" + url,
+          url: "https://blue-archive-api.onrender.com/api/v1" + url,
         });
       });
 
