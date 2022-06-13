@@ -21,6 +21,7 @@ const shinyUrl = 'https://imassc.gamedbs.jp/chara/show/1/'
 // set up
 const app = express();
 app.use(bodyParser.json({ limit: "50mb" }));
+app.use(express.static('public/images'));
 app.use(cors());
 dotenv.config();
 app.use(
@@ -188,7 +189,7 @@ app.get("/api/v1/wiki/:character", (req, res) => {
                 image.push(data)
                 const options = {
                   url : data,
-                  dest : '/Pictures/live2D/others', 
+                  dest : 'F:/Pictures/Live2D/others', 
                   // Create a folder as following
           
                 }
@@ -200,12 +201,6 @@ app.get("/api/v1/wiki/:character", (req, res) => {
       
       
           }).catch((err) => console.error(err))
-   
-      
-    
-      
-       
-
 
       }
 
@@ -243,6 +238,7 @@ app.get("/api/v1/wiki/:character", (req, res) => {
           $("div.uk-grid-match",html).each(function(i,e){
             const img=  $(this).find("a > img").attr("data-src");
             console.log(img)
+            image.push(img)
           })
         $(" body > div.uk-offcanvas-content > main > div.uk-container.uk-container-center.uk-margin-top.uk-margin-large-bottom > div > div.uk-width-2-3\\@m.uk-first-column > div.uk-grid-match.uk-grid-small.uk-text-center.uk-grid.uk-grid-stack > div.uk-grid-margin.uk-first-column > div",html).each(function(){
           const img=  $(this).find("a > img").attr("data-src");
@@ -262,7 +258,7 @@ app.get("/api/v1/wiki/:character", (req, res) => {
    
 
       })
-
+      res.status(200).json({image})
     } catch (error) {
       res.status(500).json(error);
     }
