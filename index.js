@@ -170,45 +170,53 @@ app.get("/api/v1/wiki/:character", (req, res) => {
 
   //     })
 
-  app.get("/imas/:id", async (req, res) => {
-      let url = imasUrl + req.params.id;
-
-      const image = [] ;
-      try {
-        axios(url).then((response) => {
-          const html = response.data;
-          const $ = cheerio.load(html);
-
-          $(".carcon",html).each(function () {
-            const data =  $(this).find("div > div > a").attr('href')
-              image.push(data)
-              const options = {
-                url : data,
-                dest : '/Pictures/live2D',
+  app.get("/imas/download", async (req, res) => {
+      // let url = imasUrl + req.params.id;
+      let id_start_chars = 101
+      let id_of_character = 314;
+      for( id_start_chars ; id_start_chars < id_of_character ;id_start_chars++){
+        let url =imasUrl + id_start_chars
         
-              }
-              download.image(options).then(({filename}) => {
-                console.log('Save to' , filename)
-              }).catch((err) => console.error(err));
-          })
-        
+        const image = [] ;
+  
+        await axios(url).then((response) => {
+            const html = response.data;
+            const $ = cheerio.load(html);
     
+            $(".carcon",html).each(function () {
+              const data =  $(this).find("div > div > a").attr('href')
+                image.push(data)
+                const options = {
+                  url : data,
+                  dest : '/Pictures/live2D/others', 
+                  // Create a folder as following
+          
+                }
+                download.image(options).then(({filename}) => {
+                  console.log('Save to' , filename)
+                }).catch((err) => console.error(err));
+            })
+          
+      
+      
+          }).catch((err) => console.error(err))
+   
+      
     
-        })
-        // .each(function () {
-        //   const image = $(this).find("img").attr("href");
-        //   console.log(image)})
+      
+       
 
-     
- 
+
+      }
 
       res.status(200).json({
-              message: 'Success',
-              image: image
-      })
-      } catch (error) {
-        res.status(500).json(error);
-      }
+        message: 'Success. All images download to your folder',
+    
+})
+   
+   
+   
+     
 
   })
 
