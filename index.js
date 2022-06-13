@@ -212,6 +212,7 @@ app.get("/api/v1/wiki/:character", (req, res) => {
 
   })
 
+  // STILL ERROR
   app.get("/shiny/1/:id", async (req, res) => {
     let url = shinyUrl + req.params.id;
     const image = [] ;
@@ -225,6 +226,7 @@ app.get("/api/v1/wiki/:character", (req, res) => {
     //     console.log(data)
     // })
     // download icon png
+    
           $("div.uk-width-1-4 > div.uk-card ",html).each(function(){
             const img =    $(this).find("a > img").attr("data-src");
         
