@@ -1,7 +1,7 @@
 # blueArchive_API
 Deploy : https://blue-archive-api.onrender.com/api/v1
 
-API for blue archive player. Crawl data from https://bluearchive.fandom.com/wiki/Blue_Archive/Student_Profile
+API for blue archive player also some API for private personality. Crawl data from https://bluearchive.fandom.com/wiki/Blue_Archive/Student_Profile
 
 Repo has 2 routes :
 <!--  Get all characters-->
