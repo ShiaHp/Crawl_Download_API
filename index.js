@@ -4,9 +4,20 @@ const axios = require("axios");
 const cheerio = require("cheerio");
 const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
+const fs = require("fs");
+const client = require("https");
+const res = require("express/lib/response");
+const download = require('image-downloader');
+
+
 
 const url = "https://bluearchive.fandom.com/wiki/Blue_Archive/Student_Profile";
 const charUrl = "https://bluearchive.fandom.com/wiki/";
+
+const imasUrl = 'https://starlight.kirara.ca/char/';
+
+const shinyUrl = 'https://imassc.gamedbs.jp/chara/show/1/'
+
 // set up
 const app = express();
 app.use(bodyParser.json({ limit: "50mb" }));
@@ -131,6 +142,15 @@ app.get("/api/v1/wiki/:character", (req, res) => {
         return element !== undefined;
       });
 
+
+      
+
+     
+
+
+
+
+
       res.status(200).json({
           message : 'Success',
             quote : uniq ,
@@ -138,11 +158,107 @@ app.get("/api/v1/wiki/:character", (req, res) => {
             character  : characters
       })
     });
- 
+
   } catch (error) {
     res.status(500).json(error);
   }
 });
+
+  // function downloadImage(url,filepath) {
+  //     client.get(url,(response) => {
+  //       res.pipe(fs.createWriteStream(filepath));
+
+  //     })
+
+  app.get("/imas/:id", async (req, res) => {
+      let url = imasUrl + req.params.id;
+
+      const image = [] ;
+      try {
+        axios(url).then((response) => {
+          const html = response.data;
+          const $ = cheerio.load(html);
+
+          $(".carcon",html).each(function () {
+            const data =  $(this).find("div > div > a").attr('href')
+              image.push(data)
+              const options = {
+                url : data,
+                dest : '/Pictures/live2D',
+        
+              }
+              download.image(options).then(({filename}) => {
+                console.log('Save to' , filename)
+              }).catch((err) => console.error(err));
+          })
+        
+    
+    
+        })
+        // .each(function () {
+        //   const image = $(this).find("img").attr("href");
+        //   console.log(image)})
+
+     
+ 
+
+      res.status(200).json({
+              message: 'Success',
+              image: image
+      })
+      } catch (error) {
+        res.status(500).json(error);
+      }
+
+  })
+
+  app.get("/shiny/1/:id", async (req, res) => {
+    let url = shinyUrl + req.params.id;
+    const image = [] ;
+    try {
+       await axios(url).then((response) => {
+        const html = response.data;
+        const $ = cheerio.load(html);
+
+    //  $(" .uk-width-1-2@m uk-first-column a",html).each(function(){
+    //     const data = $(this).find("img").attr("src");
+    //     console.log(data)
+    // })
+    // download icon png
+          $("div.uk-width-1-4 > div.uk-card ",html).each(function(){
+            const img =    $(this).find("a > img").attr("data-src");
+        
+          })
+          // Download image from website 
+          $("div.uk-grid-match",html).each(function(i,e){
+            const img=  $(this).find("a > img").attr("data-src");
+            console.log(img)
+          })
+        $(" body > div.uk-offcanvas-content > main > div.uk-container.uk-container-center.uk-margin-top.uk-margin-large-bottom > div > div.uk-width-2-3\\@m.uk-first-column > div.uk-grid-match.uk-grid-small.uk-text-center.uk-grid.uk-grid-stack > div.uk-grid-margin.uk-first-column > div",html).each(function(){
+          const img=  $(this).find("a > img").attr("data-src");
+            console.log(img)
+          })
+   
+       
+            // const options = {
+            //   url : data,
+            //   dest : '/Pictures/live2D',
+      
+            // }
+            // download.image(options).then(({filename}) => {
+            //   console.log('Save to' , filename)
+            // }).catch((err) => console.error(err));
+       
+   
+
+      })
+
+    } catch (error) {
+      res.status(500).json(error);
+    }
+
+})
+
 
 app.listen(process.env.PORT || 8080, (req, res) => {
   console.log("Server is running on port 8080");
