@@ -1,21 +1,13 @@
-# blueArchive_API
-Deploy : https://blue-archive-api.onrender.com/api/v1
+# Crawl_Download_API
 
-API for blue archive player also some API for private personality. Crawl data from https://bluearchive.fandom.com/wiki/Blue_Archive/Student_Profile
 
-Repo has 2 routes :
-<!--  Get all characters-->
-<!-- Get single Character  --> 
-with following infomation :
-            "image":
-            "Age": 
-            "Birthday"
-            "Height"
-            "School Year"
-            "Club"
-            "Hobby"
-            "Obtainability"
-            "Gift (Great  / Normal )
-            "Furniture Interaction"
-            "Voice Actor"
-            "Illustrator":
+
+
+How to use : 
+
+| API | Use for|
+| ------------- | ------------- |
+| BA  | Infomation about char  |
+| Imas Cinderella  | Download all image |
+| Imas Shiny  | Download all image |
+| Project Sekai  | Download all image |
