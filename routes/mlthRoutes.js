@@ -1,10 +1,10 @@
-// const express = require('express')
-// const router = express.Router();
+const express = require('express')
+const router = express.Router();
+
+const {downloadImg,getInfoChar } = require('../controllers/mlthController')
+router.route('/mlth/info').get(getInfoChar);
+router.route('/mlth/downloadChar/:id').get(downloadImg);
 
 
-// router.route("/char/details/:id").get( async (req, res) => {
-//     const url = firstChar + req.params.id;
-//     console.log(url)
-// }) )
 
-// module.exports = router;
+module.exports = router;
