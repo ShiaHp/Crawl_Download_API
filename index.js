@@ -45,47 +45,6 @@ app.use("/api/v1/idol",shinyRoutes)
 app.use("/api/v1/idol",sekaiRoutes)
 
 
-// routes get image from specific id of image
-// app.get('/api/v1/mlth/chara/show/gal/:id/:url', async(req, res) => {
-//       const url = `${charMlthUrl}/${req.params.id}/${req.params.url}`;
-//       console.log(url)
-//       const gallery = []
-      
-//       try {
-//           axios(url).then((response) => {
-//             const html = response.data;
-//             const $ = cheerio.load(html);
-//             $("article.d2_3 > section.imgbox").each(function(index,element){
-//               $(this).find("article > a > img").each((function(){
-//                 const image = $(this).attr("data-original");
-
-
-//                 const options = {
-//                   url: image,
-//                   dest: "F:/Pictures/Live2D/others",
-               
-//                 };
-
-//                 download
-//                 .image(options)
-//                 .then(({ filename }) => {
-//                   console.log("Save to", filename);
-//                 })
-//                 .catch((err) => console.error(err));
-            
-          
-//                 gallery.push(image);
-//              }))
-      
-//             })
-//             res.status(200).json({ gallery})
-//           })
-//       } catch (error) {
-//         res.status(500).json(error)
-//       }
-
-
-// })
 
 
 
