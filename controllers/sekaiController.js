@@ -2,11 +2,18 @@ const axios = require("axios");
 const cheerio = require("cheerio");
 const download = require("image-downloader");
 const request = require("request");
+const winston = require('winston');
+
 const sharp = require("sharp");
 
 const sekaiUrl = "https://pjsekai.gamedbs.jp/chara/show/";
 const charUrl = "hhttps://pjsekai.gamedbs.jp/chara/show/1";
-
+const logger = winston.createLogger({
+  transports: [
+    new winston.transports.Console(),
+    new winston.transports.File({ filename: 'combined.log' })
+  ]
+});
 const downloadImg = async (req, res) => {
   let firstChar = 1;
 
@@ -38,9 +45,7 @@ const downloadImg = async (req, res) => {
                       )[1] !== undefined
                     ) {
                       const output = Date.now() + "result.png";
-                       request(
-                        { url, encoding: null },
-                        function (error, response, body) {
+                       request({ url, encoding: null }, function (error, response, body) {
                           sharp(body)
                             .toFile(`/Pictures/live2D/shiny/${output}`)
                             .then(() => {});
@@ -54,6 +59,9 @@ const downloadImg = async (req, res) => {
       });
     });
   }
+ 
+
+
 
   res.status(200).json({
     message: "Success",
