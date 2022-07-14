@@ -13,6 +13,4 @@
 | Project Sekai  | Download all image | https://pjsekai.gamedbs.jp | 
 
 
-- Demo :
 
-- https://youtu.be/ALjxQg1QaOQ?t=20
